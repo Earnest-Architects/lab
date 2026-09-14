@@ -215,7 +215,7 @@ noteCommitBtn.addEventListener("click", async () => {
       const idx = committedNotes.findIndex((n) => n.id === updated.id);
       if (idx >= 0) committedNotes[idx] = updated;
       else committedNotes.push(updated);
-      if (viewer) viewer.removeHotSpot(`note-${updated.id}`, updated.view);
+      if (viewer) viewer.removeHotSpot(`note-${updated.id}`);
       addHotspotToViewer(updated);
       renderNoteList();
       closeForm();
@@ -250,7 +250,7 @@ noteCommitBtn.addEventListener("click", async () => {
 async function handleDeleteNote(note) {
   try {
     await deleteNote(note.id);
-    if (viewer) viewer.removeHotSpot(`note-${note.id}`, note.view);
+    if (viewer) viewer.removeHotSpot(`note-${note.id}`);
     committedNotes = committedNotes.filter((n) => n.id !== note.id);
     if (editingNoteId === note.id) closeForm();
     renderNoteList();
