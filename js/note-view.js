@@ -82,6 +82,7 @@ export function openNoteModal(note, options = {}) {
         } else if (action === "cancel-delete") {
           open(false);
         } else if (action === "confirm-delete") {
+          closeContentModal();
           if (onDelete) onDelete();
         }
       },
