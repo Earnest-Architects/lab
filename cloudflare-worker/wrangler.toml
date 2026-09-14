@@ -1,0 +1,12 @@
+name = "notes-hotspot-api"
+main = "worker.js"
+compatibility_date = "2024-09-23"
+
+# Binding KV. "id" WAJIB diganti dengan ID namespace KV kamu sendiri
+# (dibuat lewat dashboard Cloudflare, lihat README.md di folder ini).
+# Kalau kamu deploy lewat "Connect to Git" di dashboard, binding ini
+# juga bisa/perlu diatur ulang manual lewat Settings > Bindings
+# setelah Worker pertama kali dibuat.
+[[kv_namespaces]]
+binding = "NOTES_KV"
+id = "GANTI_DENGAN_ID_KV_NAMESPACE_KAMU"
