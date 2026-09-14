@@ -521,6 +521,25 @@ body { top: 0 !important; position: static !important; }
   border-color: var(--accent-soft);
   outline: none;
 }
+.notes-list-item-head {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.notes-list-item-number {
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background: var(--accent-dim);
+  color: var(--accent);
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: 600;
+  line-height: 1;
+}
 .notes-list-item-view {
   font-family: var(--font-mono);
   font-size: 9.5px;
@@ -779,7 +798,6 @@ body { top: 0 !important; position: static !important; }
   animation: pulse 2.4s ease-out infinite;
 }
 .nav-hotspot-arrow {
-  position: absolute;
   width: 20px;
   height: 20px;
   color: var(--paper);
@@ -849,7 +867,6 @@ body { top: 0 !important; position: static !important; }
   animation: pulse 1.6s ease-out infinite;
 }
 .content-hotspot-icon {
-  position: absolute;
   width: 14px;
   height: 14px;
   color: var(--content-accent);
@@ -918,7 +935,6 @@ body { top: 0 !important; position: static !important; }
   animation: pulse 1.9s ease-out infinite;
 }
 .note-hotspot-icon {
-  position: absolute;
   width: 14px;
   height: 14px;
   color: var(--accent);
