@@ -1,4 +1,4 @@
-name = "notes-hotspot-api"
+name = "lab"
 main = "worker.js"
 compatibility_date = "2024-09-23"
 
@@ -9,4 +9,4 @@ compatibility_date = "2024-09-23"
 # setelah Worker pertama kali dibuat.
 [[kv_namespaces]]
 binding = "NOTES_KV"
-id = "GANTI_DENGAN_ID_KV_NAMESPACE_KAMU"
+id = "5b6f3433dbfc4222b8ff929ceaba63c9"
