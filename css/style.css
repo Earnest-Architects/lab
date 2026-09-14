@@ -479,6 +479,7 @@ body { top: 0 !important; position: static !important; }
 .notes-nav-panel {
   left: 20px;
   right: auto;
+  bottom: 78px; /* geser ke atas supaya tidak tertumpuk #lang-switcher (bottom: 22px, tinggi 42px) */
   align-items: flex-start;
 }
 .notes-list-panel {
@@ -715,7 +716,7 @@ body { top: 0 !important; position: static !important; }
   .top-controls { top: 16px; right: 16px; }
   .nav-panel { right: 14px; bottom: 14px; gap: 8px; }
   .floorplan-panel { width: 150px; height: 220px; min-width: 120px; min-height: 160px; padding: 8px; }
-  .notes-nav-panel { left: 14px; }
+  .notes-nav-panel { left: 14px; bottom: 72px; }
   .notes-list-panel { width: 170px; height: 200px; min-width: 120px; min-height: 160px; padding: 8px; }
   .brand-line { animation-name: brand-line-draw-sm; }
   @keyframes brand-line-draw-sm {
