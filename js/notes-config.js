@@ -11,4 +11,4 @@
  *
  * Tempel URL itu di bawah ini (TANPA garis miring "/" di akhir).
  * ============================================================ */
-export const NOTES_API_URL = "https://lab.vtour.workers.dev";
+export const NOTES_API_URL = "https://notes-hotspot-api.vtour.workers.dev";
