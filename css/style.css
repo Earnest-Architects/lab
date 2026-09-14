@@ -440,6 +440,11 @@ body { top: 0 !important; position: static !important; }
   text-transform: uppercase;
   color: var(--paper-dim);
 }
+.floorplan-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
 .icon-btn {
   display: grid;
   place-items: center;
@@ -457,6 +462,11 @@ body { top: 0 !important; position: static !important; }
 .icon-btn:hover {
   background: var(--accent-dim);
   color: var(--paper);
+}
+.icon-btn:disabled {
+  opacity: 0.35;
+  cursor: default;
+  pointer-events: none;
 }
 .floorplan-show-btn {
   width: 42px;
