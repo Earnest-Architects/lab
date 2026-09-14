@@ -8,7 +8,7 @@
  * perlu diedit sama sekali.
  * ============================================================
  */
-import { views, findView, findContent, projectName, metaDescription } from "./content.js";
+import { views, findView, findContent, projectName, metaDescription, notesEnabled } from "./content.js";
 import { createNavHotspotEl, createContentHotspotEl, createNoteHotspotEl } from "./hotspots.js";
 import { openContentModal } from "./content-modal.js";
 import { openNoteModal } from "./note-view.js";
@@ -100,25 +100,34 @@ export const viewer = pannellum.viewer("panorama", {
    kode), catatan disimpan dinamis lewat Worker Cloudflare. Diambil
    sekali saat halaman dibuka, lalu ditempel ke scene yang sesuai
    pakai viewer.addHotSpot() — pannellum otomatis menyimpannya untuk
-   scene yang belum aktif dan menampilkannya begitu scene itu dibuka. */
-fetchNotes().then((notes) => {
-  notes.forEach((note) => {
-    if (!note || !note.view || !findView(note.view)) return; // abaikan catatan untuk view yang sudah dihapus
-    viewer.addHotSpot(
-      {
-        id: `note-${note.id}`,
-        pitch: note.pitch,
-        yaw: note.yaw,
-        type: "info",
-        cssClass: "note-hotspot",
-        createTooltipFunc: createNoteHotspotEl,
-        createTooltipArgs: { label: "", showLabel: false },
-        clickHandlerFunc: () => openNoteModal(note),
-      },
-      note.view
-    );
+   scene yang belum aktif dan menampilkannya begitu scene itu dibuka.
+
+   Fitur ini SEPENUHNYA dikendalikan oleh `notesEnabled` di content.js.
+   Kalau false: icon 💬 "Leave a note" disembunyikan dan fetchNotes()
+   tidak pernah dipanggil — project ini tidak perlu Worker/KV Cloudflare
+   sama sekali. */
+if (notesEnabled) {
+  fetchNotes().then((notes) => {
+    notes.forEach((note) => {
+      if (!note || !note.view || !findView(note.view)) return; // abaikan catatan untuk view yang sudah dihapus
+      viewer.addHotSpot(
+        {
+          id: `note-${note.id}`,
+          pitch: note.pitch,
+          yaw: note.yaw,
+          type: "info",
+          cssClass: "note-hotspot",
+          createTooltipFunc: createNoteHotspotEl,
+          createTooltipArgs: { label: "", showLabel: false },
+          clickHandlerFunc: () => openNoteModal(note),
+        },
+        note.view
+      );
+    });
   });
-});
+} else {
+  document.getElementById("note-btn")?.remove();
+}
 
 /** Pindah ke view lain. Dipakai floorplan.js (klik titik di denah). */
 export function goToView(id) {
