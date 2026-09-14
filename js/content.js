@@ -40,6 +40,15 @@
 export const projectName = "Labougainvillea";
 export const metaDescription = "Labougainvillea 360° Panorama by Rinaldisign.";
 
+/* FITUR CATATAN HOTSPOT (note-finder.html + panel "Notes" di index.html):
+   - true  -> icon 💬 "Leave a note" & panel "Notes" tampil, butuh Worker
+              Cloudflare + KV yang sudah disambungkan (lihat
+              cloudflare-worker/README.md).
+   - false -> semua UI catatan disembunyikan otomatis, TIDAK perlu bikin
+              Worker/KV Cloudflare sama sekali untuk project ini. File
+              note-finder.html dkk boleh tetap ada di repo, tidak dipakai. */
+export const notesEnabled = true;
+
 /* ============================================================
    1) DENAH (FLOORPLAN)
    ------------------------------------------------------------
