@@ -104,8 +104,8 @@ function initNotesList() {
   function formatTimestamp(ms) {
     if (!ms) return "—";
     try {
-      return new Date(ms).toLocaleString("id-ID", {
-        day: "2-digit", month: "short", year: "numeric",
+      return new Date(ms).toLocaleString("ja-JP", {
+        year: "numeric", month: "2-digit", day: "2-digit",
         hour: "2-digit", minute: "2-digit",
       });
     } catch {
@@ -114,8 +114,8 @@ function initNotesList() {
   }
 
   function buildPrintDocument(notes) {
-    const generatedAt = new Date().toLocaleString("id-ID", {
-      day: "2-digit", month: "long", year: "numeric",
+    const generatedAt = new Date().toLocaleString("ja-JP", {
+      year: "numeric", month: "long", day: "numeric",
       hour: "2-digit", minute: "2-digit",
     });
     const siteTitle = document.title.split("|")[0].trim() || "Virtual Tour";
@@ -124,9 +124,9 @@ function initNotesList() {
       const v = findView(note.view);
       const text = note.text
         ? `<p class="pn-text">${escapeHtml(note.text).replace(/\n/g, "<br>")}</p>`
-        : (!note.image ? `<p class="pn-text pn-empty">(catatan kosong)</p>` : "");
+        : (!note.image ? `<p class="pn-text pn-empty">(内容なし)</p>` : "");
       const image = note.image
-        ? `<img class="pn-photo" src="${note.image}" alt="Lampiran catatan ${i + 1} — ${escapeHtml(v.title)}">`
+        ? `<img class="pn-photo" src="${note.image}" alt="メモ ${i + 1} の添付写真 — ${escapeHtml(v.title)}">`
         : "";
       return `
         <section class="pn-item">
@@ -142,10 +142,10 @@ function initNotesList() {
     }).join("");
 
     return `<!DOCTYPE html>
-<html lang="id">
+<html lang="ja">
 <head>
 <meta charset="UTF-8">
-<title>Daftar Catatan — ${escapeHtml(siteTitle)}</title>
+<title>メモ一覧 — ${escapeHtml(siteTitle)}</title>
 <style>
   * { box-sizing: border-box; }
   body {
@@ -261,15 +261,15 @@ function initNotesList() {
   <div class="pn-header">
     <div>
       <h1>${escapeHtml(siteTitle)}</h1>
-      <p class="pn-subtitle">Daftar Catatan Hotspot</p>
+      <p class="pn-subtitle">ホットスポット メモ一覧</p>
     </div>
     <div class="pn-meta">
-      Dicetak: ${generatedAt}<br>
-      Total catatan: ${notes.length}
+      印刷日時: ${generatedAt}<br>
+      メモ総数: ${notes.length}件
     </div>
   </div>
   ${items}
-  <p class="pn-footer">Dihasilkan otomatis dari panel Notes — ${escapeHtml(siteTitle)}</p>
+  <p class="pn-footer">Notesパネルより自動生成 — ${escapeHtml(siteTitle)}</p>
 </body>
 </html>`;
   }
