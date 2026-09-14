@@ -67,14 +67,20 @@ function initNotesList() {
 
     valid
       .slice()
-      .sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0))
-      .forEach((note) => {
+      // Urutan lama -> baru, supaya catatan terbaru berada di paling
+      // akhir daftar (memudahkan cek catatan baru tanpa harus scroll
+      // dari atas tiap kali ada catatan masuk).
+      .sort((a, b) => (a.createdAt || 0) - (b.createdAt || 0))
+      .forEach((note, i) => {
         const v = findView(note.view);
         const item = document.createElement("button");
         item.type = "button";
         item.className = "notes-list-item";
         item.innerHTML = `
-          <span class="notes-list-item-view">${escapeHtml(v.title)}</span>
+          <span class="notes-list-item-head">
+            <span class="notes-list-item-number">${i + 1}</span>
+            <span class="notes-list-item-view">${escapeHtml(v.title)}</span>
+          </span>
           <span class="notes-list-item-text">${noteSummary(note)}</span>
         `;
         item.addEventListener("click", () => {
