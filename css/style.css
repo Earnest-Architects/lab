@@ -474,6 +474,69 @@ body { top: 0 !important; position: static !important; }
 .floorplan-show-btn svg { width: 20px; height: 20px; }
 .floorplan-panel.hidden { display: none; }
 
+/* Notes list panel (bottom-left) — daftar semua catatan hotspot,
+   klik 1 catatan -> viewer pindah ke scene + pitch/yaw catatan itu. */
+.notes-nav-panel {
+  left: 20px;
+  right: auto;
+  align-items: flex-start;
+}
+.notes-list-panel {
+  width: 240px;
+  height: 280px;
+}
+.notes-list-body {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding-right: 2px;
+}
+.notes-list-empty {
+  margin: auto;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--paper-dim);
+  text-align: center;
+}
+.notes-list-item {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding: 8px 9px;
+  border-radius: 9px;
+  border: 1px solid var(--panel-border);
+  background: rgba(0, 0, 0, 0.22);
+  text-align: left;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+.notes-list-item:hover,
+.notes-list-item:focus-visible {
+  background: var(--accent-dim);
+  border-color: var(--accent-soft);
+  outline: none;
+}
+.notes-list-item-view {
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.notes-list-item-text {
+  font-size: 12px;
+  line-height: 1.35;
+  color: var(--paper);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
 /* Floor tabs (1F / 2F / 3F) */
 .floor-tabs {
   display: flex;
@@ -652,6 +715,8 @@ body { top: 0 !important; position: static !important; }
   .top-controls { top: 16px; right: 16px; }
   .nav-panel { right: 14px; bottom: 14px; gap: 8px; }
   .floorplan-panel { width: 150px; height: 220px; min-width: 120px; min-height: 160px; padding: 8px; }
+  .notes-nav-panel { left: 14px; }
+  .notes-list-panel { width: 170px; height: 200px; min-width: 120px; min-height: 160px; padding: 8px; }
   .brand-line { animation-name: brand-line-draw-sm; }
   @keyframes brand-line-draw-sm {
     0%   { width: 0;    opacity: 0; }
