@@ -264,25 +264,22 @@ async function handleDeleteNote(note) {
 
 function addHotspotToViewer(note) {
   if (!viewer || note.view !== currentViewId) return;
-  viewer.addHotSpot(
-    {
-      id: `note-${note.id}`,
-      pitch: note.pitch,
-      yaw: note.yaw,
-      type: "info",
-      cssClass: "note-hotspot",
-      createTooltipFunc: createNoteHotspotEl,
-      createTooltipArgs: { label: "", showLabel: false },
-      clickHandlerFunc: () => {
-        openNoteModal(note, {
-          editable: true,
-          onEdit: () => openEditNoteForm(note),
-          onDelete: () => handleDeleteNote(note),
-        });
-      },
+  viewer.addHotSpot({
+    id: `note-${note.id}`,
+    pitch: note.pitch,
+    yaw: note.yaw,
+    type: "info",
+    cssClass: "note-hotspot",
+    createTooltipFunc: createNoteHotspotEl,
+    createTooltipArgs: { label: "", showLabel: false },
+    clickHandlerFunc: () => {
+      openNoteModal(note, {
+        editable: true,
+        onEdit: () => openEditNoteForm(note),
+        onDelete: () => handleDeleteNote(note),
+      });
     },
-    note.view
-  );
+  });
 }
 
 /** Saat pindah/reload gambar 360, tampilkan lagi catatan yang sudah ada
