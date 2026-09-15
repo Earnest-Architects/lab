@@ -147,15 +147,28 @@
     </svg>
   </a>
 
-  <button id="share-btn" class="rail-btn" aria-label="Share link" title="Share link">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <circle cx="18" cy="5" r="3"/>
-      <circle cx="6" cy="12" r="3"/>
-      <circle cx="18" cy="19" r="3"/>
-      <line x1="8.6" y1="10.6" x2="15.4" y2="6.4"/>
-      <line x1="8.6" y1="13.4" x2="15.4" y2="17.6"/>
-    </svg>
-  </button>
+  <div class="share-nav">
+    <button id="share-btn" class="rail-btn" aria-label="Share link" title="Share link">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="18" cy="5" r="3"/>
+        <circle cx="6" cy="12" r="3"/>
+        <circle cx="18" cy="19" r="3"/>
+        <line x1="8.6" y1="10.6" x2="15.4" y2="6.4"/>
+        <line x1="8.6" y1="13.4" x2="15.4" y2="17.6"/>
+      </svg>
+    </button>
+    <div class="share-popup" id="share-popup" hidden role="dialog" aria-label="Share this tour">
+      <p class="share-popup-title">Scan to open</p>
+      <div class="share-qr-card">
+        <canvas id="share-qr-canvas" width="176" height="176"></canvas>
+      </div>
+      <p class="share-link-text" id="share-link-text"></p>
+      <div class="share-popup-actions">
+        <button type="button" id="share-copy-btn" class="share-action-btn">Copy link</button>
+        <button type="button" id="share-native-btn" class="share-action-btn share-action-btn--ghost">Share…</button>
+      </div>
+    </div>
+  </div>
 
   <button id="vr-btn" class="rail-btn" aria-label="View in VR" title="View in VR">
     <span class="rail-vr-text" aria-hidden="true">VR</span>
@@ -172,6 +185,7 @@
 </div>
 
 <script src="lib/pannellum.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
 
 <!--
   Semua modul di bawah ini adalah ES Module (type="module"), jadi
