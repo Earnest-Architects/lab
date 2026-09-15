@@ -14,11 +14,6 @@ import { openContentModal } from "./content-modal.js";
 import { openNoteModal } from "./note-view.js";
 import { fetchNotes } from "./notes-api.js";
 import { setCurrentView, getCurrentViewId, tourEvents } from "./state.js";
-import { initLanguageSwitcher } from "./google-translate.js";
-
-/* Pasang ikon bola dunia (pojok kiri bawah) untuk ganti bahasa —
-   lihat js/google-translate.js untuk cara kerjanya & batasannya. */
-initLanguageSwitcher();
 
 /* ---------- Judul halaman (tab browser), judul besar HUD, meta
    description, & tag Open Graph/Twitter (preview link sosmed) ----------

@@ -365,87 +365,6 @@ html, body {
 }
 .share-action-btn--ghost:hover { background: var(--accent-dim); border-color: var(--accent-soft); }
 
-
-
-#lang-switcher {
-  position: relative;
-}
-
-/* Sengaja tidak override color/background/border di sini lagi —
-   biarkan .lang-switcher-btn ikut gaya default .rail-btn (var(--panel),
-   var(--paper), var(--panel-border)) supaya warnanya sama persis
-   dengan icon lain (share, note, VR, fullscreen) di rail yang sama. */
-
-#lang-switcher-popup {
-  position: absolute;
-  left: calc(100% + 14px);
-  bottom: 0;
-  min-width: 190px;
-  padding: 12px;
-  border-radius: 14px;
-  background: var(--panel-strong);
-  border: 1px solid var(--panel-border);
-  backdrop-filter: blur(16px) saturate(140%);
-  -webkit-backdrop-filter: blur(16px) saturate(140%);
-  box-shadow: 0 12px 32px rgba(0,0,0,0.4), 0 0 0 1px var(--accent-dim);
-}
-
-.lang-switcher-title {
-  margin: 0 0 8px;
-  padding: 0 4px;
-  font-family: var(--font-ui);
-  font-size: 11px;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  color: var(--paper-dim);
-}
-
-.lang-switcher-list {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-
-.lang-switcher-option {
-  display: block;
-  width: 100%;
-  padding: 8px 10px;
-  border: none;
-  border-radius: 9px;
-  background: transparent;
-  color: var(--paper);
-  font-family: var(--font-ui);
-  font-size: 13.5px;
-  text-align: left;
-  cursor: pointer;
-  transition: background 0.15s ease, color 0.15s ease;
-}
-.lang-switcher-option:hover { background: var(--accent-dim); }
-.lang-switcher-option.is-active {
-  color: var(--accent);
-  background: var(--accent-dim);
-  font-weight: 500;
-}
-
-@media (max-width: 640px) {
-  #lang-switcher { left: 14px; bottom: 14px; }
-}
-
-/* ---------- Google Translate: sembunyikan UI bawaannya ----------
-   Widget resmi Google (dipasang oleh js/google-translate.js) dipakai
-   HANYA sebagai "mesin" terjemahan — tampilannya (dropdown kotak,
-   banner atas, garis kuning highlight kata) semua disembunyikan;
-   yang terlihat cuma UI custom kita sendiri (#lang-switcher). */
-#google_translate_element,
-.goog-te-banner-frame,
-.goog-te-gadget-icon,
-#goog-gt-tt,
-.goog-te-balloon-frame {
-  display: none !important;
-}
-body { top: 0 !important; position: static !important; }
-.goog-text-highlight { background: none !important; box-shadow: none !important; }
-
 /* ---------- Toast (share feedback) ---------- */
 
 .toast {
@@ -833,7 +752,6 @@ body { top: 0 !important; position: static !important; }
   .rail-btn svg { width: 16px; height: 16px; }
   .rail-btn .rail-vr-text { font-size: 11px; }
   .notes-list-panel { width: 170px; height: 200px; min-width: 120px; min-height: 160px; padding: 8px; left: calc(100% + 10px); }
-  #lang-switcher-popup { left: calc(100% + 10px); min-width: 160px; }
   .share-popup { left: calc(100% + 10px); width: max-content; max-width: min(80vw, 210px); padding: 14px; }
   .share-qr-card { padding: 10px; }
   .share-qr-card canvas { width: 148px; height: 148px; }
