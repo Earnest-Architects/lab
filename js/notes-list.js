@@ -37,15 +37,18 @@ function initNotesList() {
   // yang PERSIS sama dengan yang terlihat di panel — bukan fetch ulang.
   let renderedNotes = [];
 
-  /* ---------- Sembunyikan / tampilkan panel ---------- */
+  /* ---------- Sembunyikan / tampilkan panel ----------
+     Icon di rail (showBtn) TIDAK ikut disembunyikan lagi saat panel
+     terbuka — dibiarkan selalu tampil dan berfungsi sebagai toggle,
+     supaya perilakunya konsisten dengan icon lain di rail (share,
+     bahasa): klik sekali buka, klik lagi tutup. Tombol X di dalam
+     panel (hideBtn) tetap ada sebagai cara alternatif untuk menutup. */
 
   hideBtn.addEventListener("click", () => {
     panel.classList.add("hidden");
-    showBtn.classList.add("visible");
   });
   showBtn.addEventListener("click", () => {
-    panel.classList.remove("hidden");
-    showBtn.classList.remove("visible");
+    panel.classList.toggle("hidden");
   });
 
   /* ---------- Render daftar catatan ---------- */
