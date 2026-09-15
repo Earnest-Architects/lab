@@ -104,7 +104,7 @@ export function initLanguageSwitcher() {
 
   const btn = document.createElement("button");
   btn.type = "button";
-  btn.className = "control-btn lang-switcher-btn";
+  btn.className = "rail-btn lang-switcher-btn";
   btn.setAttribute("aria-label", "Change language");
   btn.setAttribute("title", "Change language");
   btn.innerHTML = `
@@ -156,5 +156,5 @@ export function initLanguageSwitcher() {
 
   wrap.appendChild(btn);
   wrap.appendChild(popup);
-  document.body.appendChild(wrap);
+  (document.getElementById("icon-rail") || document.body).appendChild(wrap);
 }
