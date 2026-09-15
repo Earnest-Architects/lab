@@ -250,13 +250,18 @@ const shareCopyBtn = document.getElementById("share-copy-btn");
 const shareNativeBtn = document.getElementById("share-native-btn");
 
 function renderShareQr(url) {
-  if (!shareQrCanvas || !window.QRCode) return;
-  window.QRCode.toCanvas(shareQrCanvas, url, {
-    width: 176,
-    margin: 2,
-    errorCorrectionLevel: "M",
-    color: { dark: "#0b0f18", light: "#ffffff" },
-  });
+  if (!shareQrCanvas || !window.qrcodeDraw) return;
+  try {
+    window.qrcodeDraw(shareQrCanvas, url, {
+      size: 188,
+      margin: 2,
+      ecLevel: "M",
+      dark: "#0b0f18",
+      light: "#ffffff",
+    });
+  } catch (err) {
+    /* teks terlalu panjang untuk di-encode — biarkan kartu kosong, link teks tetap tampil */
+  }
 }
 function closeSharePopup() {
   if (!sharePopup || sharePopup.hidden) return;
