@@ -243,24 +243,63 @@ async function copyLink() {
   showToast(ok ? "Link copied" : "Copy failed");
 }
 
-if (shareBtn) {
-  shareBtn.addEventListener("click", async () => {
-    const shareData = {
-      title: document.title,
-      text: `${projectName} Virtual Tour`,
-      url: window.location.href,
-    };
-    if (navigator.share) {
+const sharePopup = document.getElementById("share-popup");
+const shareQrCanvas = document.getElementById("share-qr-canvas");
+const shareLinkText = document.getElementById("share-link-text");
+const shareCopyBtn = document.getElementById("share-copy-btn");
+const shareNativeBtn = document.getElementById("share-native-btn");
+
+function renderShareQr(url) {
+  if (!shareQrCanvas || !window.QRCode) return;
+  window.QRCode.toCanvas(shareQrCanvas, url, {
+    width: 176,
+    margin: 2,
+    errorCorrectionLevel: "M",
+    color: { dark: "#0b0f18", light: "#ffffff" },
+  });
+}
+function closeSharePopup() {
+  if (!sharePopup || sharePopup.hidden) return;
+  sharePopup.hidden = true;
+  shareBtn.classList.remove("is-active");
+}
+function openSharePopup() {
+  if (!sharePopup) return;
+  const url = window.location.href;
+  if (shareLinkText) shareLinkText.textContent = url;
+  renderShareQr(url);
+  sharePopup.hidden = false;
+  shareBtn.classList.add("is-active");
+}
+if (shareCopyBtn) shareCopyBtn.addEventListener("click", copyLink);
+if (shareNativeBtn) {
+  if (navigator.share) {
+    shareNativeBtn.addEventListener("click", async () => {
       try {
-        await navigator.share(shareData);
-        return;
+        await navigator.share({ title: document.title, text: `${projectName} Virtual Tour`, url: window.location.href });
       } catch (err) {
-        // Pengguna membatalkan share sheet, atau gagal — jangan tampilkan
-        // pesan error, cukup diamkan (perilaku umum Web Share API).
-        if (err && err.name === "AbortError") return;
+        /* dibatalkan pengguna — diamkan */
       }
+    });
+  } else {
+    shareNativeBtn.remove();
+  }
+}
+document.addEventListener("click", (e) => {
+  if (sharePopup && !sharePopup.hidden && !e.target.closest(".share-nav")) closeSharePopup();
+});
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape") closeSharePopup();
+});
+
+if (shareBtn) {
+  shareBtn.addEventListener("click", (e) => {
+    e.stopPropagation();
+    if (sharePopup) {
+      sharePopup.hidden ? openSharePopup() : closeSharePopup();
+    } else {
+      copyLink();
     }
-    copyLink();
   });
 }
 
