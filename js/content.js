@@ -47,7 +47,7 @@ export const metaDescription = "Labougainvillea 360° Panorama by Rinaldisign.";
    - false -> semua UI catatan disembunyikan otomatis, TIDAK perlu bikin
               Worker/KV Cloudflare sama sekali untuk project ini. File
               note-finder.html dkk boleh tetap ada di repo, tidak dipakai. */
-export const notesEnabled = true;
+export const notesEnabled = false;
 
 /* ============================================================
    1) DENAH (FLOORPLAN)
