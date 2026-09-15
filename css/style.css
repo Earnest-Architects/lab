@@ -193,7 +193,7 @@ html, body {
 }
 .hud-logo {
   display: block;
-  width: clamp(64px, 9vw, 108px);
+  width: clamp(96px, 13vw, 176px);
   height: auto;
   margin: 0 0 10px 0;
   filter: drop-shadow(0 2px 10px rgba(0,0,0,0.55));
@@ -218,24 +218,30 @@ html, body {
   text-shadow: 0 1px 16px rgba(0,0,0,0.5);
 }
 
-/* ---------- Top-right controls (share + fullscreen) ---------- */
+/* ---------- Icon rail terpadu (pojok kiri bawah) ----------
+   Semua tombol aksi (notes list, note, share, vr, fullscreen, bahasa)
+   disatukan di sini jadi 1 kolom vertikal, tema glass bulat senada.
+   Denah/floorplan TIDAK ikut ke sini — tetap di .nav-panel kanan-bawah,
+   cuma dipinjami tampilan .rail-btn yang sama biar temanya nyambung. */
 
-.top-controls {
+.icon-rail {
   position: absolute;
-  top: 22px;
-  right: 24px;
-  z-index: 20;
+  left: 22px;
+  bottom: 22px;
+  z-index: 30;
   display: flex;
-  align-items: center;
-  gap: 10px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
 }
 
-.control-btn {
-  width: 42px;
-  height: 42px;
+.rail-btn {
+  position: relative;
+  width: 46px;
+  height: 46px;
   display: grid;
   place-items: center;
-  border-radius: 12px;
+  border-radius: 50%;
   border: 1px solid var(--panel-border);
   background: var(--panel);
   backdrop-filter: blur(14px) saturate(140%);
@@ -243,31 +249,53 @@ html, body {
   box-shadow: 0 8px 24px rgba(0,0,0,0.28);
   color: var(--paper);
   cursor: pointer;
+  overflow: hidden;
+  text-decoration: none;
   transition: border-color 0.2s ease, transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
 }
-.control-btn svg { width: 18px; height: 18px; }
-.control-btn:hover {
+.rail-btn svg { width: 19px; height: 19px; position: relative; z-index: 1; }
+.rail-btn .rail-vr-text {
+  position: relative;
+  z-index: 1;
+  font-family: var(--font-mono);
+  font-weight: 600;
+  font-size: 13px;
+  letter-spacing: 0.02em;
+}
+.rail-btn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 1.5px solid var(--accent-soft);
+  opacity: 0;
+  transform: scale(0.5);
+  pointer-events: none;
+}
+.rail-btn:hover::before { animation: rail-wave 0.7s ease-out; }
+@keyframes rail-wave {
+  0%   { opacity: 0.9; transform: scale(0.6); }
+  100% { opacity: 0;   transform: scale(1.7); }
+}
+.rail-btn:hover {
   border-color: var(--accent-soft);
   background: var(--panel-strong);
   box-shadow: 0 8px 24px rgba(0,0,0,0.28), 0 0 0 1px var(--accent-dim);
 }
-.control-btn:active { transform: scale(0.94); }
-.control-btn:focus-visible {
+.rail-btn:active { transform: scale(0.94); }
+.rail-btn:focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 2px;
 }
-.control-btn.is-active {
+.rail-btn.is-active {
   border-color: var(--accent-soft);
   color: var(--accent);
 }
 
-/* ---------- Language switcher (globe icon, bottom-left) ---------- */
+/* ---------- Language switcher (globe icon, ikut di icon-rail) ---------- */
 
 #lang-switcher {
-  position: absolute;
-  left: 22px;
-  bottom: 22px;
-  z-index: 40;
+  position: relative;
 }
 
 .lang-switcher-btn {
@@ -282,8 +310,8 @@ html, body {
 
 #lang-switcher-popup {
   position: absolute;
-  left: 0;
-  bottom: calc(100% + 10px);
+  left: calc(100% + 14px);
+  bottom: 0;
   min-width: 190px;
   padding: 12px;
   border-radius: 14px;
@@ -468,31 +496,19 @@ body { top: 0 !important; position: static !important; }
   cursor: default;
   pointer-events: none;
 }
-.floorplan-show-btn {
-  width: 42px;
-  height: 42px;
-  border-radius: 12px;
-  background: var(--panel);
-  border: 1px solid var(--panel-border);
-  backdrop-filter: blur(14px) saturate(140%);
-  -webkit-backdrop-filter: blur(14px) saturate(140%);
-  box-shadow: 0 8px 24px rgba(0,0,0,0.28);
-  color: var(--paper);
-  display: none;
-}
+.floorplan-show-btn { display: none; }
 .floorplan-show-btn.visible { display: grid; }
-.floorplan-show-btn svg { width: 20px; height: 20px; }
 .floorplan-panel.hidden { display: none; }
 
 /* Notes list panel (bottom-left) — daftar semua catatan hotspot,
    klik 1 catatan -> viewer pindah ke scene + pitch/yaw catatan itu. */
 .notes-nav-panel {
-  left: 20px;
-  right: auto;
-  bottom: 78px; /* geser ke atas supaya tidak tertumpuk #lang-switcher (bottom: 22px, tinggi 42px) */
-  align-items: flex-start;
+  position: relative;
 }
 .notes-list-panel {
+  position: absolute;
+  left: calc(100% + 14px);
+  bottom: 0;
   width: 240px;
   height: 280px;
 }
@@ -739,14 +755,17 @@ body { top: 0 !important; position: static !important; }
 
 @media (max-width: 560px) {
   .hud-top { padding: 18px 16px; }
-  .hud-logo { width: clamp(48px, 16vw, 72px); margin-bottom: 6px; }
+  .hud-logo { width: clamp(64px, 20vw, 96px); margin-bottom: 6px; }
   /* Fitur fullscreen dihilangkan di tampilan smartphone (share tetap tampil) */
   #fullscreen-btn { display: none !important; }
-  .top-controls { top: 16px; right: 16px; }
   .nav-panel { right: 14px; bottom: 14px; gap: 8px; }
   .floorplan-panel { width: 150px; height: 220px; min-width: 120px; min-height: 160px; padding: 8px; }
-  .notes-nav-panel { left: 14px; bottom: 72px; }
-  .notes-list-panel { width: 170px; height: 200px; min-width: 120px; min-height: 160px; padding: 8px; }
+  .icon-rail { left: 14px; bottom: 14px; gap: 8px; }
+  .rail-btn { width: 40px; height: 40px; }
+  .rail-btn svg { width: 16px; height: 16px; }
+  .rail-btn .rail-vr-text { font-size: 11px; }
+  .notes-list-panel { width: 170px; height: 200px; min-width: 120px; min-height: 160px; padding: 8px; left: calc(100% + 10px); }
+  #lang-switcher-popup { left: calc(100% + 10px); min-width: 160px; }
   .brand-line { animation-name: brand-line-draw-sm; }
   @keyframes brand-line-draw-sm {
     0%   { width: 0;    opacity: 0; }
