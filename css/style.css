@@ -371,15 +371,10 @@ html, body {
   position: relative;
 }
 
-.lang-switcher-btn {
-  color: rgba(255, 255, 255, 0.92);
-  background: rgba(255, 255, 255, 0.08);
-  border-color: rgba(255, 255, 255, 0.28);
-}
-.lang-switcher-btn:hover {
-  background: rgba(255, 255, 255, 0.16);
-  border-color: rgba(255, 255, 255, 0.4);
-}
+/* Sengaja tidak override color/background/border di sini lagi —
+   biarkan .lang-switcher-btn ikut gaya default .rail-btn (var(--panel),
+   var(--paper), var(--panel-border)) supaya warnanya sama persis
+   dengan icon lain (share, note, VR, fullscreen) di rail yang sama. */
 
 #lang-switcher-popup {
   position: absolute;
