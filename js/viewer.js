@@ -250,17 +250,34 @@ const shareCopyBtn = document.getElementById("share-copy-btn");
 const shareNativeBtn = document.getElementById("share-native-btn");
 
 function renderShareQr(url) {
-  if (!shareQrCanvas || !window.qrcodeDraw) return;
+  if (!shareQrCanvas) return;
+  if (!window.qrcodeDraw) {
+    console.error("[share] window.qrcodeDraw tidak tersedia — cek apakah lib/qrcode.js berhasil dimuat.");
+    return;
+  }
+  const opts = { size: 188, margin: 2, dark: "#0b0f18", light: "#ffffff" };
   try {
-    window.qrcodeDraw(shareQrCanvas, url, {
-      size: 188,
-      margin: 2,
-      ecLevel: "M",
-      dark: "#0b0f18",
-      light: "#ffffff",
-    });
-  } catch (err) {
-    /* teks terlalu panjang untuk di-encode — biarkan kartu kosong, link teks tetap tampil */
+    // Coba level koreksi "M" dulu (standar).
+    window.qrcodeDraw(shareQrCanvas, url, { ...opts, ecLevel: "M" });
+  } catch (errM) {
+    try {
+      // Kalau gagal (paling sering karena link terlalu panjang untuk level M),
+      // turunkan ke level "L" — koreksi error lebih rendah tapi daya tampung
+      // datanya lebih besar, jadi link yang lebih panjang masih bisa di-encode.
+      window.qrcodeDraw(shareQrCanvas, url, { ...opts, ecLevel: "L" });
+      console.warn("[share] QR di-render dengan ecLevel L (fallback) karena level M gagal:", errM);
+    } catch (errL) {
+      // Masih gagal juga — kemungkinan besar link memang terlalu panjang
+      // untuk QR sama sekali. Jangan biarkan kartu kosong tanpa penjelasan.
+      console.error("[share] Gagal membuat QR code untuk link ini:", errL);
+      const ctx = shareQrCanvas.getContext("2d");
+      ctx.clearRect(0, 0, shareQrCanvas.width, shareQrCanvas.height);
+      ctx.fillStyle = "#0b0f18";
+      ctx.font = "12px sans-serif";
+      ctx.textAlign = "center";
+      ctx.fillText("Link terlalu panjang", shareQrCanvas.width / 2, shareQrCanvas.height / 2 - 8);
+      ctx.fillText("untuk QR code", shareQrCanvas.width / 2, shareQrCanvas.height / 2 + 8);
+    }
   }
 }
 function closeSharePopup() {
