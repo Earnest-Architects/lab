@@ -346,14 +346,78 @@ html, body {
 
 .pnlm-load-box, .pnlm-about-msg { display: none !important; }
 
+/* ---------- Sidebar handle (drag/tap bar) — mobile only, hidden on desktop ---------- */
+
+#sidebar-handle {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  flex: 0 0 auto;
+  border: none;
+  background: transparent;
+  color: var(--paper-dim);
+  padding: 2px 0 4px;
+  cursor: pointer;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.sidebar-handle-bar {
+  position: absolute;
+  top: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 36px;
+  height: 4px;
+  border-radius: 999px;
+  background: var(--panel-border);
+}
+.sidebar-handle-chevron {
+  width: 14px;
+  height: 14px;
+  transition: transform 0.22s ease;
+}
+#sidebar.expanded .sidebar-handle-chevron { transform: rotate(180deg); }
+
+/* ---------- Mobile: sidebar becomes a collapsible bottom sheet ----------
+ * Peek (default): only the handle + mode toggle + 360° image picker show,
+ * so the panorama stays visible and rotatable underneath. Tapping the
+ * handle, or opening the note form, expands the sheet (scrollable) so the
+ * form/notes list is fully usable — this is toggled via the "expanded"
+ * class from js/note-finder.js, not just CSS. Desktop layout is untouched
+ * outside this media query. */
 @media (max-width: 720px) {
   .note-back-btn { top: 16px; left: 16px; }
+
   #sidebar {
     top: auto;
-    left: 12px;
-    right: 12px;
-    bottom: 12px;
-    width: auto;
-    max-height: 62vh;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    max-width: none;
+    border-radius: 20px 20px 0 0;
+    padding: 18px 16px calc(14px + env(safe-area-inset-bottom, 0px));
+    gap: 10px;
+    max-height: none;
+    box-shadow: 0 -12px 40px rgba(0,0,0,0.45);
+  }
+
+  #sidebar-handle { display: flex; position: relative; }
+
+  /* Peek state: hide everything except the handle, mode toggle and the
+     360° image picker, so the sheet only takes the space it needs. */
+  #sidebar:not(.expanded) .finder-intro,
+  #sidebar:not(.expanded) .point-list-header,
+  #sidebar:not(.expanded) #note-list,
+  #sidebar:not(.expanded) .point-empty { display: none; }
+
+  /* Expanded state: full sheet, scrollable, room for the note form/list. */
+  #sidebar.expanded {
+    max-height: 82dvh;
+    overflow-y: auto;
   }
 }
