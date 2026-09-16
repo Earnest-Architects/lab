@@ -4,9 +4,9 @@
  * ============================================================
  * Ambil frame yang sedang tampil di canvas WebGL Pannellum persis
  * pada sudut pandang saat itu, lalu buka tab baru berisi halaman
- * print-ready: full-bleed, landscape, kertas default A4 (kalau
- * printer/PDF-nya support A3, browser tetap akan scale otomatis
- * sesuai ukuran kertas yang dipilih user di print dialog).
+ * print-ready: full-bleed, landscape — @page tidak mengunci ukuran
+ * kertas, jadi otomatis mengikuti kertas apapun yang dipilih user
+ * di print dialog (A4, A3, dst), foto selalu full-bleed.
  *
  * Pojok kiri-bawah: "Image CG"; pojok kanan-bawah: nama ruangan
  * (diambil dari #scene-title, yang sudah dikelola viewer.js).
@@ -47,9 +47,15 @@ function openPrintPage(imageDataUrl, roomName) {
     src: url("${fontUrl}") format("truetype");
     font-display: block;
   }
-  @page { size: A4 landscape; margin: 2mm; }
+  @page { size: landscape; margin: 2mm; }
   * { box-sizing: border-box; }
-  html, body { margin: 0; padding: 0; background: #fff; }
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: #fff;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
   body {
     width: 100%;
     height: 100vh;
@@ -68,8 +74,11 @@ function openPrintPage(imageDataUrl, roomName) {
     bottom: 3mm;
     font-family: "NK Mono", "Monotype Corsiva", cursive;
     font-size: 12pt;
-    color: #fff;
-    text-shadow: 0 1px 3px rgba(0,0,0,0.55);
+    color: #ffffff !important;
+    -webkit-text-fill-color: #ffffff;
+    text-shadow: 0 0 2px rgba(0,0,0,0.9), 0 1px 3px rgba(0,0,0,0.9), 0 0 6px rgba(0,0,0,0.6);
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
     z-index: 2;
   }
   .print-stamp--left { left: 5mm; }
