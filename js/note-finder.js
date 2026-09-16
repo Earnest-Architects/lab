@@ -49,6 +49,24 @@ const noteCommitBtn = document.getElementById("note-commit-btn");
 const noteList = document.getElementById("note-list");
 const noteListEmpty = document.getElementById("note-list-empty");
 
+const sidebarEl = document.getElementById("sidebar");
+const sidebarHandle = document.getElementById("sidebar-handle");
+
+/* ---------- Sidebar bottom-sheet (mobile only — no-op on desktop, lihat
+ * media query di css/note-finder.css). Peek = hanya handle + mode toggle +
+ * pemilih gambar 360 yang tampil, supaya panorama tidak tertutup. Expanded
+ * = sheet penuh (form/daftar catatan bisa dipakai). ---------- */
+function setSidebarExpanded(expanded) {
+  if (!sidebarEl) return;
+  sidebarEl.classList.toggle("expanded", expanded);
+  if (sidebarHandle) sidebarHandle.setAttribute("aria-expanded", String(expanded));
+}
+if (sidebarHandle) {
+  sidebarHandle.addEventListener("click", () => {
+    setSidebarExpanded(!sidebarEl.classList.contains("expanded"));
+  });
+}
+
 let viewer = null;
 let currentViewId = null;
 let mode = "rotate"; // "rotate" | "point"
@@ -132,6 +150,7 @@ function openNewNoteFormAt(pitch, yaw, clientX, clientY) {
 
   noteCommitBtn.textContent = "Save note";
   noteForm.hidden = false;
+  setSidebarExpanded(true);
   noteText.focus();
 }
 
@@ -157,6 +176,7 @@ function openEditNoteForm(note) {
   pendingMarker.hidden = true; // titik ini sudah punya icon permanen di panorama
   noteCommitBtn.textContent = "Update note";
   noteForm.hidden = false;
+  setSidebarExpanded(true);
   noteText.focus();
 }
 
@@ -166,6 +186,7 @@ function closeForm() {
   noteForm.hidden = true;
   pendingMarker.hidden = true;
   clearImage();
+  setSidebarExpanded(false);
 }
 
 function clearImage() {
