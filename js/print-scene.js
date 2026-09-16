@@ -31,12 +31,22 @@ function openPrintPage(imageDataUrl, roomName) {
   const win = window.open("", "_blank");
   if (!win) return; // popup diblokir browser — gagal secara diam-diam, tombol lain tetap jalan
 
+  // Font custom (NK_Mono.ttf) di-resolve ke URL absolut dari lokasi
+  // halaman utama, karena dokumen di tab print ini kosong (about:blank)
+  // dan tidak punya origin sendiri untuk resolve path relatif.
+  const fontUrl = new URL("fonts/NK_Mono.ttf", window.location.href).href;
+
   win.document.write(`<!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8" />
 <title>Print — ${escapeHtml(roomName)}</title>
 <style>
+  @font-face {
+    font-family: "NK Mono";
+    src: url("${fontUrl}") format("truetype");
+    font-display: block;
+  }
   @page { size: A4 landscape; margin: 2mm; }
   * { box-sizing: border-box; }
   html, body { margin: 0; padding: 0; background: #fff; }
@@ -56,10 +66,10 @@ function openPrintPage(imageDataUrl, roomName) {
   .print-stamp {
     position: absolute;
     bottom: 3mm;
-    font-family: "Monotype Corsiva", "Apple Chancery", cursive;
+    font-family: "NK Mono", "Monotype Corsiva", cursive;
     font-size: 12pt;
-    color: #1a1a1a;
-    text-shadow: 0 1px 3px rgba(255,255,255,0.65);
+    color: #fff;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.55);
     z-index: 2;
   }
   .print-stamp--left { left: 5mm; }
@@ -85,8 +95,11 @@ function openPrintPage(imageDataUrl, roomName) {
   </div>
   <script>
     window.onload = function () {
-      window.focus();
-      window.print();
+      var ready = (document.fonts && document.fonts.ready) ? document.fonts.ready : Promise.resolve();
+      ready.then(function () {
+        window.focus();
+        window.print();
+      });
     };
   <\/script>
 </body>
